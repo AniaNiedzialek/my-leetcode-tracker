@@ -138,6 +138,16 @@ class Solution:
         return dfs(root, 0)</code></pre>
 
     <button onclick="closeWindow();">Close</button>
+
+    <!-- the last question 236 - lowest common ancestor
+     problem: Lowest Common Ancestor of a Binary Tree
+     Pattern: Binary Tree DFS
+     Core idea: Recursively find the lowest common ancestor (LCA) of two nodes.
+     Base case: if the root contains either p or q or if its null - return the current root
+     Return logic: If both left and right subtrees contain one of the nodes, the current root is the LCA.
+     Time: O(n), because each node is visited once.
+     Space: O(h), because the recursion stack depends on the height of the tree.
+   -->
 </div>
 </body>
 </html>
