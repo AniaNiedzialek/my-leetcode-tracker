@@ -1,0 +1,23 @@
+#popupOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#popupWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+
+    z-index: 1000;
+}

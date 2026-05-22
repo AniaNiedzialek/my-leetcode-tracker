@@ -3,15 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+
+    <script src="../script.js" defer></script>
+
     <title>Binary Trees</title>
 </head>
 <body>
     <h1>Binary Trees</h1>
+
     <p>Binary trees are a fundamental data structure in computer science.</p>
+
     <p>Topics:</p>
+
     <ul>
-        <li>DFS</li>
-        <li>BFS</li>
-        <li>Backtracking</li>
+        <li>Question #</li>
+        <li>
+            <button onclick="openWindow();">
+                Question #112. Path Sum
+            </button>
+        </li>
+        <li>
+            <button onclick="openWindow();">
+                Question #129. Sum Root to Leaf Numbers
+            </button>
+        </li>
+        <li>
+            <button onclick="openWindow();">
+                Question #236. Lowest Common Ancestor of a Binary Tree
+            </button>
+        </li>
     </ul>
+
+    <!-- Popup background -->
+<div id="popupOverlay" onclick="closeWindow();" hidden></div>
+
+<!-- Popup window -->
+<div id="popupWindow" hidden>
+    <h2>Question #112. Path Sum</h2>
+
+    <p><strong>Pattern:</strong> Binary Tree DFS</p>
+
+    <p><strong>Sub-pattern:</strong> Root-to-leaf path tracking</p>
+
+    <p>
+        <strong>Core idea:</strong> Recursively move down the tree while
+        subtracting the current node's value.
+    </p>
+
+    <p>
+        <strong>Base case:</strong> If the node is a leaf, check whether
+        targetSum - root.val == 0.
+    </p>
+
+    <p>
+        <strong>Return logic:</strong> Left subtree OR right subtree,
+        because only one valid path is needed.
+    </p>
+
+    <p><strong>Time:</strong> O(n), because each node is visited once.</p>
+
+    <p><strong>Space:</strong> O(h), because recursion stack depends on tree height.</p>
+    <h3> Code Snippet</h3>
+    <p># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+
+        if not root.left and not root.right:
+            return targetSum - root.val == 0
+
+        targetSum -= root.val
+
+        return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)</p>
+
+    <button onclick="closeWindow();">Close</button>
+</div>
+
+<div id="popupWindow" hidden>
+    <h2>Question #129. Sum Root to Leaf Numbers</h2>
+
+    <p><strong>Pattern:</strong> Binary Tree DFS</p>
+
+    <p><strong>Sub-pattern:</strong> Root-to-leaf path building</p>
+
+    <p>
+        <strong>Core idea:</strong> Recursively move down the tree while building
+        the current number from the root to the current node.
+    </p>
+
+    <p>
+        <strong>Path update:</strong> At each node, update the path using
+        <code>path = path * 10 + node.val</code>.
+    </p>
+
+    <p>
+        <strong>Base case:</strong> If the node is a leaf, return the full number
+        created by that root-to-leaf path.
+    </p>
+
+    <p>
+        <strong>Return logic:</strong> Return the left subtree result plus the
+        right subtree result, because we need the sum of all root-to-leaf numbers.
+    </p>
+
+    <p><strong>Time:</strong> O(n), because each node is visited once.</p>
+
+    <p>
+        <strong>Space:</strong> O(h), because the recursion stack depends on
+        the height of the tree.
+    </p>
+
+    <h3>Code Snippet</h3>
+
+    <pre><code>class Solution:
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        def dfs(node, path):
+            if not node:
+                return 0
+
+            path = path * 10 + node.val
+
+            if not node.left and not node.right:
+                return path
+
+            return dfs(node.left, path) + dfs(node.right, path)
+
+        return dfs(root, 0)</code></pre>
+
+    <button onclick="closeWindow();">Close</button>
+</div>
 </body>
+</html>
