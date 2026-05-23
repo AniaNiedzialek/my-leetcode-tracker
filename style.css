@@ -3,12 +3,12 @@ body {
   font-family: "Arial", system-ui;
   
   padding: 40px;
-  color:#c8176a
+  color:#7f5e2a
 }
 
 h1 {
   font-size: 48px;
-  color:#6f1252;
+  color:#0c7b97b5;
 }
 
 button {
@@ -20,15 +20,39 @@ button {
 }
 
 .pattern-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
 }
 
-.pattern-btn {
-  background-color: #eeeeee;
-  border: 1px solid #999;
-  border-radius: 60px;
+.pattern-card {
+  background-color: #f4ffe8;
+  border: 2px solid #b6d7a8;
+  border-radius: 20px;
+  padding: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pattern-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.pattern-card lottie-player {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.pattern-card span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2f4f2f;
 }
 
 .questions-container {

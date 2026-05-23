@@ -1,13 +1,53 @@
-const patterns = [
-  "Two Pointers",
-  "Sliding Window",
-  "Binary Search",
-  "Breadth-First Search",
-  "Backtracking",
-  "Depth-First Search",
-  "Priority Queue (Top K)",
-  "Dynamic Programming"
+// const patterns = [
+//   "Two Pointers",
+//   "Sliding Window",
+//   "Binary Search",
+//   "Breadth-First Search",
+//   "Backtracking",
+//   "Depth-First Search",
+//   "Priority Queue (Top K)",
+//   "Dynamic Programming"
+// ];
+
+const patternData = [
+  {
+    name: "Two Pointers",
+    animation: "assets/avocado.json"
+  },
+  {
+    name: "Sliding Window",
+    animation: "assets/broccoli.json"
+  },
+  {
+    name: "Binary Search",
+    animation: "assets/coffee.json"
+  },
+  {
+    name: "Breadth-First Search",
+    animation: "assets/donut.json"
+  },
+  {
+    name: "Backtracking",
+    animation: "assets/mushroom.json"
+  },
+  {
+    name: "Depth-First Search",
+    animation: "assets/orange.json"
+  },
+  {
+    name: "Priority Queue (Top K)",
+    animation: "assets/potato.json"
+  },
+  {
+    name: "Dynamic Programming",
+    animation: "assets/plant.json"
+  }
 ];
+
+const patterns = patternData.map(function (pattern) {
+  return pattern.name;
+});
+
 
 let selectedPattern = null;
 
@@ -59,13 +99,24 @@ function saveQuestions(questions) {
 function renderPatterns() {
   patternList.innerHTML = "";
 
-  patterns.forEach(function (pattern) {
+  patternData.forEach(function (pattern) {
     const button = document.createElement("button");
-    button.textContent = pattern;
-    button.classList.add("pattern-btn");
+    button.classList.add("pattern-card");
+
+    button.innerHTML = `
+      <lottie-player
+        src="${pattern.animation}"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay>
+      </lottie-player>
+
+      <span>${pattern.name}</span>
+    `;
 
     button.addEventListener("click", function () {
-      selectedPattern = pattern;
+      selectedPattern = pattern.name;
       renderQuestions();
     });
 
