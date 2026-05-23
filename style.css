@@ -1,14 +1,43 @@
 
 body {
-  font-family: "Arial", system-ui;
-  
-  padding: 40px;
-  color:#7f5e2a
+  margin: 0;
+  padding: 50px;
+  min-height: 100vh;
+
+  font-family: "Playpen Sans", cursive;
+  color: #7b5527;
+
+  background:
+    radial-gradient(circle at 12% 20%, rgba(180, 215, 150, 0.35) 0 120px, transparent 121px),
+    radial-gradient(circle at 88% 12%, rgba(255, 221, 140, 0.25) 0 150px, transparent 151px),
+    radial-gradient(circle at 80% 85%, rgba(190, 225, 170, 0.35) 0 180px, transparent 181px),
+    linear-gradient(to bottom, #fffaf0 0%, #fbfff4 55%, #f0ffe8 100%);
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    background-image: radial-gradient(rgba(110,150, 95,0.25) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.25;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 h1 {
-  font-size: 48px;
-  color:#0c7b97b5;
+  font-size: 60px;
+  color:#02590fae;
+  font-weight: 500;
+}
+h2 {
+    font-weight: 400;
+    font-size: 20px;
 }
 
 button {
@@ -21,12 +50,12 @@ button {
 
 .pattern-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 2px;
 }
 
-.pattern-card {
+.pattern-card{
   background-color: #f4ffe8;
   border: 2px solid #b6d7a8;
   border-radius: 20px;
@@ -36,12 +65,22 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.pattern-card:hover {
+.add-question-btn {
+  background-color: #fdffe8;
+  border: 2px solid #e1c293;
+  border-radius: 20px;
+  padding: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pattern-card:hover, .add-question-btn:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
-.pattern-card lottie-player {
+.pattern-card lottie-player, .add-question-btn lottie-player {
   width: 120px;
   height: 120px;
   margin: 0 auto;
@@ -53,6 +92,15 @@ button {
   font-weight: bold;
   font-size: 16px;
   color: #2f4f2f;
+}
+
+.add-question-btn span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #936b44;
+
 }
 
 .questions-container {
@@ -126,4 +174,44 @@ textarea {
   min-height: 70px;
   resize: vertical;
 }
+
+
+.auth-card {
+  width: 320px;
+  padding: 20px;
+  margin: 24px 0;
+
+  background-color: #fffdf0;
+  border: 2px solid #e5c58b;
+  border-radius: 20px;
+}
+
+.auth-card h2 {
+  margin-top: 0;
+}
+
+.auth-card input {
+  display: block;
+  width: 100%;
+
+  margin-bottom: 12px;
+  padding: 10px;
+
+  border: 1px solid #c9b38c;
+  border-radius: 10px;
+
+  font-family: inherit;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.auth-buttons button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 

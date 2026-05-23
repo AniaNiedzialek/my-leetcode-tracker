@@ -1,13 +1,27 @@
-// const patterns = [
-//   "Two Pointers",
-//   "Sliding Window",
-//   "Binary Search",
-//   "Breadth-First Search",
-//   "Backtracking",
-//   "Depth-First Search",
-//   "Priority Queue (Top K)",
-//   "Dynamic Programming"
-// ];
+import {initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, 
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+    getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAMSRavwgyyRzPr-KfpWXj30t-38IBEbPE",
+    authDomain: "leetcode-tracker-f554d.firebaseapp.com",
+    projectId: "leetcode-tracker-f554d",
+    storageBucket: "leetcode-tracker-f554d.firebasestorage.app",
+    messagingSenderId: "491050209088",
+    appId: "1:491050209088:web:061fa20643c629972a34a5",
+    measurementId: "G-5F67MND7GE"
+  };
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 const patternData = [
   {
@@ -51,6 +65,13 @@ const patterns = patternData.map(function (pattern) {
 
 let selectedPattern = null;
 
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
+const signUpBtn = document.getElementById("signUpBtn");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const authStatus = document.getElementById("authStatus");
+
 const patternList = document.getElementById("patternList");
 const questionsContainer = document.getElementById("questionsContainer");
 const selectedPatternTitle = document.getElementById("selectedPatternTitle");
@@ -82,18 +103,109 @@ const popupTime = document.getElementById("popupTime");
 const popupSpace = document.getElementById("popupSpace");
 const popupComments = document.getElementById("popupComments");
 
-function getQuestions() {
-  const storedQuestions = localStorage.getItem("leetcodeQuestions");
+let currentUser = null;
+let questions = [];
+let unsubscribeQuestions = null;
 
-  if (storedQuestions === null) {
-    return [];
-  }
+// function getQuestions() {
+//   const storedQuestions = localStorage.getItem("leetcodeQuestions");
 
-  return JSON.parse(storedQuestions);
+//   if (storedQuestions === null) {
+//     return [];
+//   }
+
+//   return JSON.parse(storedQuestions);
+// }
+
+// function saveQuestions(questions) {
+//   localStorage.setItem("leetcodeQuestions", JSON.stringify(questions));
+// }
+
+function getUserQuestionsCollection() {
+  return collection(db, "users", currentUser.uid, "questions");
 }
 
-function saveQuestions(questions) {
-  localStorage.setItem("leetcodeQuestions", JSON.stringify(questions));
+signUpBtn.addEventListener("click", async function() {
+
+    try {
+        await createUserWithEmailAndPassword(
+            auth,
+            emailInput.value,
+            passwordInput.value
+        );        
+    } catch (error) {
+        alert(error.message);
+    }
+});
+loginBtn.addEventListener("click", async function() {
+    try {
+        await signInWithEmailAndPassword(
+            auth,
+            emailInput.value,
+            passwordInput.value
+        );
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+logoutBtn.addEventListener("click", async function() {
+    try {
+        await signOut(auth);
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+onAuthStateChanged(auth, function(user) {
+    currentUser = user;
+
+    if (user) {
+        authStatus.textContent = "Logged in as " + user.email;
+
+        emailInput.style.display = "none";
+        passwordInput.style.display = "none";
+        signUpBtn.style.display = "none";
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+
+        listenToUserQuestions();
+    } else {
+        authStatus.textContent = "Not logged in";
+
+        emailInput.style.display = "block";
+        passwordInput.style.display = "block";
+        signUpBtn.style.display = "inline-block";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+
+        questions = [];
+
+        if (unsubscribeQuestions) {
+            unsubscribeQuestions();
+            unsubscribeQuestions = null;
+        }
+        renderQuestions();
+    }
+});
+
+
+function listenToUserQuestions() {
+    if(unsubscribeQuestions) {
+        unsubscribeQuestions();
+    }
+
+    const questionsQuery = query(
+        getUserQuestionsCollection(),
+        orderBy('createdAt', 'desc')
+    );
+
+    unsubscribeQuestions = onSnapshot(questionsQuery, function(snapshot) {
+        questions = snapshot.docs.map(function (doc) {
+            return { id: doc.id, ...doc.data() };
+        });
+        renderQuestions();
+    });
 }
 
 function renderPatterns() {
@@ -138,14 +250,19 @@ function renderPatternDropdown() {
 function renderQuestions() {
   questionsContainer.innerHTML = "";
 
+  if (!currentUser) {
+    selectedPatternTitle.textContent = "Please log in";
+    questionsContainer.innerHTML = "<p>Log in to view your saved questions.</p>";
+    return;
+  }
+
   if (selectedPattern === null) {
     selectedPatternTitle.textContent = "Select a pattern";
+    questionsContainer.innerHTML = "<p>Choose a pattern to see your questions.</p>";
     return;
   }
 
   selectedPatternTitle.textContent = selectedPattern;
-
-  const questions = getQuestions();
 
   const filteredQuestions = questions.filter(function (question) {
     return question.pattern === selectedPattern;
@@ -191,6 +308,11 @@ function openQuestionPopup(question) {
 }
 
 openAddQuestionBtn.addEventListener("click", function () {
+  if (!currentUser) {
+    alert("Please log in before adding a question.");
+    return;
+  }
+
   addQuestionPopup.style.display = "block";
 });
 
@@ -202,11 +324,15 @@ closeViewQuestionBtn.addEventListener("click", function () {
   viewQuestionPopup.style.display = "none";
 });
 
-questionForm.addEventListener("submit", function (event) {
+questionForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
+  if (!currentUser) {
+    alert("Please log in before saving a question.");
+    return;
+  }
+
   const newQuestion = {
-    id: Date.now(),
     title: questionTitle.value,
     pattern: questionPattern.value,
     coreIdea: coreIdea.value,
@@ -214,18 +340,20 @@ questionForm.addEventListener("submit", function (event) {
     returnLogic: returnLogic.value,
     timeComplexity: timeComplexity.value,
     spaceComplexity: spaceComplexity.value,
-    additionalComments: additionalComments.value
+    additionalComments: additionalComments.value,
+    createdAt: serverTimestamp()
   };
 
-  const questions = getQuestions();
-  questions.push(newQuestion);
-  saveQuestions(questions);
+  try {
+    await addDoc(getUserQuestionsCollection(), newQuestion);
 
-  questionForm.reset();
-  addQuestionPopup.style.display = "none";
+    questionForm.reset();
+    addQuestionPopup.style.display = "none";
 
-  selectedPattern = newQuestion.pattern;
-  renderQuestions();
+    selectedPattern = newQuestion.pattern;
+  } catch (error) {
+    alert(error.message);
+  }
 });
 
 window.addEventListener("click", function (event) {

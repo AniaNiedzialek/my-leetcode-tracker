@@ -5,20 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leetcode Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
 
 </head>
 <body>
 
-  <h1>Welcome to My Leetcode Tracker.</h1>
+  <h1>Welcome to My Leetcode Tracker!</h1>
 
   <p>
     This website helps me track my Leetcode progress.
     Choose a pattern below or add a new question.
   </p>
 
-  <button id="openAddQuestionBtn">Add a Question</button>
+  <section class ="auth-card">
+    <h2>Account</h2>
+    <p id="auth-status">Not logged in</p>
 
-  <h2>Patterns</h2>
+    <input type='email' id='emailInput' placeholder='Email' />
+    <input type='password' id='passwordInput' placeholder='Password' />
+    <div class="auth-buttons">
+        <button id="signUpBtn">Sign Up</button>
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn">Logout</button>
+    </div>
+  </section>
+
+  <button id="openAddQuestionBtn" class="add-question-btn">
+    <lottie-player
+    src="assets/printer.json"
+    background="transparent"
+    speed="1"
+    loop
+    autoplay></lottie-player>
+    <span>Craft a Question</span>
+
+  </button>
+
+  <h2>Explore Patterns</h2>
 
   <div id="patternList" class="pattern-list"></div>
 
@@ -33,7 +58,7 @@
     <div class="popup-content large-popup">
       <span id="closeAddQuestionBtn" class="close">&times;</span>
 
-      <h2>Add a Question</h2>
+      <h2>Craft a Question</h2>
 
       <form id="questionForm">
         <label>
@@ -114,6 +139,7 @@
   </div>
 
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <script src="script.js"></script>
+  <!-- <script src="script.js"></script> -->
+   <script type="module" src="script.js"></script>
 </body>
 </html>
