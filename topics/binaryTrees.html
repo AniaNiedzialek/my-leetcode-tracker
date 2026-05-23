@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../style.css">
 
-    <script src="../script.js" defer></script>
+    <!-- <script src="../script.js" defer></script> -->
 
     <title>Binary Trees</title>
 </head>
@@ -16,138 +16,55 @@
 
     <p>Topics:</p>
 
-    <ul>
-        <li>Question #</li>
-        <li>
-            <button onclick="openWindow();">
-                Question #112. Path Sum
-            </button>
-        </li>
-        <li>
-            <button onclick="openWindow();">
-                Question #129. Sum Root to Leaf Numbers
-            </button>
-        </li>
-        <li>
-            <button onclick="openWindow();">
-                Question #236. Lowest Common Ancestor of a Binary Tree
-            </button>
-        </li>
-    </ul>
 
-    <!-- Popup background -->
-<div id="popupOverlay" onclick="closeWindow();" hidden></div>
+    <button class="open-popup-btn"
+    data-title="Question #112. Path Sum"
+    data-message="Pattern: Binary Tree DFS
+    Core idea: Recursively explore all paths from the root to the leaves, keeping track of the current path sum.
+    Base case: If the current node is null, return false.
+    Return logic: If a leaf node is reached, check if the current path sum equals the target sum.
+    Time: O(n), because each node is visited once.
+    Space: O(h), because the recursion stack depends on the height of the tree.
+    ">
+    Open #112. Path Sum
+    </button>
 
-<!-- Popup window -->
-<div id="popupWindow" hidden>
-    <h2>Question #112. Path Sum</h2>
+    
+    <button class="open-popup-btn"
+    data-title="Question #129. Lowest Common Ancestor"
+    data-message="Pattern: Binary Tree DFS
+    <Core-idea: Recursively move down the tree while building the current number from the root to the current node.
+    Base-case: If the node is a leaf, return the full number created by that root-to-leaf path.
+    Return logic: Return the left subtree result plus the right subtree result, because we need the sum of all root-to-leaf numbers.
+    Time: O(n), because each node is visited once.
+    Space: O(h), because the recursion stack depends on the height of the tree.
+    ">
+    Open #129. Lowest Common Ancestor
+    </button>
 
-    <p><strong>Pattern:</strong> Binary Tree DFS</p>
-
-    <p><strong>Sub-pattern:</strong> Root-to-leaf path tracking</p>
-
-    <p>
-        <strong>Core idea:</strong> Recursively move down the tree while
-        subtracting the current node's value.
-    </p>
-
-    <p>
-        <strong>Base case:</strong> If the node is a leaf, check whether
-        targetSum - root.val == 0.
-    </p>
-
-    <p>
-        <strong>Return logic:</strong> Left subtree OR right subtree,
-        because only one valid path is needed.
-    </p>
-
-    <p><strong>Time:</strong> O(n), because each node is visited once.</p>
-
-    <p><strong>Space:</strong> O(h), because recursion stack depends on tree height.</p>
-    <h3> Code Snippet</h3>
-    <p># Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        if not root:
-            return False
-
-        if not root.left and not root.right:
-            return targetSum - root.val == 0
-
-        targetSum -= root.val
-
-        return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)</p>
-
-    <button onclick="closeWindow();">Close</button>
-</div>
-
-<div id="popupWindow" hidden>
-    <h2>Question #129. Sum Root to Leaf Numbers</h2>
-
-    <p><strong>Pattern:</strong> Binary Tree DFS</p>
-
-    <p><strong>Sub-pattern:</strong> Root-to-leaf path building</p>
-
-    <p>
-        <strong>Core idea:</strong> Recursively move down the tree while building
-        the current number from the root to the current node.
-    </p>
-
-    <p>
-        <strong>Path update:</strong> At each node, update the path using
-        <code>path = path * 10 + node.val</code>.
-    </p>
-
-    <p>
-        <strong>Base case:</strong> If the node is a leaf, return the full number
-        created by that root-to-leaf path.
-    </p>
-
-    <p>
-        <strong>Return logic:</strong> Return the left subtree result plus the
-        right subtree result, because we need the sum of all root-to-leaf numbers.
-    </p>
-
-    <p><strong>Time:</strong> O(n), because each node is visited once.</p>
-
-    <p>
-        <strong>Space:</strong> O(h), because the recursion stack depends on
-        the height of the tree.
-    </p>
-
-    <h3>Code Snippet</h3>
-
-    <pre><code>class Solution:
-    def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        def dfs(node, path):
-            if not node:
-                return 0
-
-            path = path * 10 + node.val
-
-            if not node.left and not node.right:
-                return path
-
-            return dfs(node.left, path) + dfs(node.right, path)
-
-        return dfs(root, 0)</code></pre>
-
-    <button onclick="closeWindow();">Close</button>
-
-    <!-- the last question 236 - lowest common ancestor
-     problem: Lowest Common Ancestor of a Binary Tree
-     Pattern: Binary Tree DFS
-     Core idea: Recursively find the lowest common ancestor (LCA) of two nodes.
+    <button class="open-popup-btn"
+    data-title="Question #236. Lowest Common Ancestor"
+    data-message="Pattern: Binary Tree DFS
+    Core idea: Recursively find the lowest common ancestor (LCA) of two nodes.
      Base case: if the root contains either p or q or if its null - return the current root
      Return logic: If both left and right subtrees contain one of the nodes, the current root is the LCA.
      Time: O(n), because each node is visited once.
      Space: O(h), because the recursion stack depends on the height of the tree.
-   -->
-</div>
+   ">
+   Open #236. Lowest Common Ancestor
+   </button>
+
+   <!-- add more buttons -->
+
+   <div id="popup" class="popup">
+    <div class="popup-content">
+        <span id="closePopupBtn" class="close">&times;</span>
+        <h2 id="popupTitle"></h2>
+        <p id="popupMessage"></p>
+    </div>
+   </div>
+
+   <script src="../script.js"></script>
+
 </body>
 </html>
