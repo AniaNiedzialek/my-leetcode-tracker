@@ -1,5 +1,6 @@
 # My Leetcode Tracker
 ---
+<img width="1452" height="633" alt="image" src="https://github.com/user-attachments/assets/f75c3daf-7c5d-47cb-8f2e-ff995f795125" />
 A personal LeetCode tracking tool designed to focus on pattern-based learning, not memorization.
 
 ## Motivation
@@ -9,6 +10,9 @@ The real goal is to:
 * recognize patterns quickly
 * understand solutions deeply
 * avoid memorizing code
+
+
+
 
 ## Learning Approach
 
