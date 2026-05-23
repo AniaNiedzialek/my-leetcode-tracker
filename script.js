@@ -9,15 +9,7 @@ import {
     getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAMSRavwgyyRzPr-KfpWXj30t-38IBEbPE",
-    authDomain: "leetcode-tracker-f554d.firebaseapp.com",
-    projectId: "leetcode-tracker-f554d",
-    storageBucket: "leetcode-tracker-f554d.firebasestorage.app",
-    messagingSenderId: "491050209088",
-    appId: "1:491050209088:web:061fa20643c629972a34a5",
-    measurementId: "G-5F67MND7GE"
-  };
+import { firebaseConfig } from "./firebase-config.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -121,7 +113,7 @@ let unsubscribeQuestions = null;
 //   localStorage.setItem("leetcodeQuestions", JSON.stringify(questions));
 // }
 
-function getUserQuestionsCollection() {
+function getUserQuestionCollection() {
   return collection(db, "users", currentUser.uid, "questions");
 }
 
