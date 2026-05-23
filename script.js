@@ -95,6 +95,9 @@ const popupTime = document.getElementById("popupTime");
 const popupSpace = document.getElementById("popupSpace");
 const popupComments = document.getElementById("popupComments");
 
+const authSection = document.getElementById("authSection");
+const appContent = document.getElementById("appContent");
+
 let currentUser = null;
 let questions = [];
 let unsubscribeQuestions = null;
@@ -150,37 +153,42 @@ logoutBtn.addEventListener("click", async function() {
 });
 
 onAuthStateChanged(auth, function(user) {
-    currentUser = user;
+  currentUser = user;
 
-    if (user) {
-        authStatus.textContent = "Logged in as " + user.email;
+  if (user) {
+    document.body.classList.remove("logged-out");
+    appContent.classList.remove("hidden");
 
-        emailInput.style.display = "none";
-        passwordInput.style.display = "none";
-        signUpBtn.style.display = "none";
-        loginBtn.style.display = "none";
-        logoutBtn.style.display = "inline-block";
+    authStatus.textContent = "Logged in as " + user.email;
 
-        listenToUserQuestions();
-    } else {
-        authStatus.textContent = "Not logged in";
+    emailInput.style.display = "none";
+    passwordInput.style.display = "none";
+    signUpBtn.style.display = "none";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
 
-        emailInput.style.display = "block";
-        passwordInput.style.display = "block";
-        signUpBtn.style.display = "inline-block";
-        loginBtn.style.display = "inline-block";
-        logoutBtn.style.display = "none";
+    listenToUserQuestions();
+  } else {
+    document.body.classList.add("logged-out");
+    appContent.classList.add("hidden");
 
-        questions = [];
+    authStatus.textContent = "Not logged in";
 
-        if (unsubscribeQuestions) {
-            unsubscribeQuestions();
-            unsubscribeQuestions = null;
-        }
-        renderQuestions();
+    emailInput.style.display = "block";
+    passwordInput.style.display = "block";
+    signUpBtn.style.display = "inline-block";
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+
+    selectedPattern = null;
+    questions = [];
+
+    if (unsubscribeQuestions) {
+      unsubscribeQuestions();
+      unsubscribeQuestions = null;
     }
+  }
 });
-
 
 function listenToUserQuestions() {
     if(unsubscribeQuestions) {
@@ -188,7 +196,7 @@ function listenToUserQuestions() {
     }
 
     const questionsQuery = query(
-        getUserQuestionsCollection(),
+        getUserQuestionCollection(),
         orderBy('createdAt', 'desc')
     );
 
@@ -337,7 +345,7 @@ questionForm.addEventListener("submit", async function (event) {
   };
 
   try {
-    await addDoc(getUserQuestionsCollection(), newQuestion);
+    await addDoc(getUserQuestionCollection(), newQuestion);
 
     questionForm.reset();
     addQuestionPopup.style.display = "none";
@@ -360,4 +368,4 @@ window.addEventListener("click", function (event) {
 
 renderPatterns();
 renderPatternDropdown();
-renderQuestions();
+// renderQuestions();

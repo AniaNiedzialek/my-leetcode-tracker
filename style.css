@@ -214,4 +214,21 @@ textarea {
   cursor: pointer;
 }
 
+.hidden {
+    display: none !important;
+}
+
+body.logged-out .auth-card {
+    max-width: 520px;
+    margin: 80px auto;
+}
+
+body.logged-out .auth-card h2 {
+    text-align: center;
+}
+
+body.logged-out #authStatus {
+    text-align: center;
+}
+
 

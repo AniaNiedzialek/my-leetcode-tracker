@@ -19,7 +19,7 @@
     Choose a pattern below or add a new question.
   </p>
 
-  <section class ="auth-card">
+  <section class ="auth-card" id="authSection">
     <h2>Account</h2>
     <p id="authStatus">Not logged in</p>
 
@@ -31,8 +31,8 @@
         <button id="logoutBtn">Logout</button>
     </div>
   </section>
-
-  <button id="openAddQuestionBtn" class="add-question-btn">
+<main id="appContent" class="app-content hidden">
+    <button id="openAddQuestionBtn" class="add-question-btn">
     <lottie-player
     src="assets/printer.json"
     background="transparent"
@@ -52,6 +52,7 @@
   <h2 id="selectedPatternTitle">Select a pattern</h2>
 
   <div id="questionsContainer" class="questions-container"></div>
+</main>
 
   <!-- Add Question Popup -->
   <div id="addQuestionPopup" class="popup">
