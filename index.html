@@ -1,24 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Leetcode Tracker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leetcode Tracker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Welcome to My Leetcode Tracker.</h1>
-    <p>This website helps me track my Leetcode progress. Check out the following folders below:</p>
-    <ul>
-        <!-- <li><a href="topics/binaryTrees.html">Binary Trees</a></li>
-        <li><a href="topics/arrays.html">Arrays</a></li> -->
-        <li><a href="patterns/two-pointers.html">Two Pointers</a></li>
-        <li><a href="patterns/sliding-window.html">Sliding Window</a></li>
-        <li><a href="patterns/binary-search.html">Binary Search</a></li>
-        <li><a href="patterns/bfs.html">Breadth-First Search</a></li>
-        <li><a href="patterns/backtracking.html">Backtracking</a></li>
-        <li><a href="patterns/dfs.html">Depth-First Search</a></li>
-        <li><a href="patterns/priority-queue.html">Priority Queue (Top K)</a></li>
 
+  <h1>Welcome to My Leetcode Tracker.</h1>
 
-    </ul>
+  <p>
+    This website helps me track my Leetcode progress.
+    Choose a pattern below or add a new question.
+  </p>
+
+  <button id="openAddQuestionBtn">Add a Question</button>
+
+  <h2>Patterns</h2>
+
+  <div id="patternList" class="pattern-list"></div>
+
+  <hr />
+
+  <h2 id="selectedPatternTitle">Select a pattern</h2>
+
+  <div id="questionsContainer" class="questions-container"></div>
+
+  <!-- Add Question Popup -->
+  <div id="addQuestionPopup" class="popup">
+    <div class="popup-content large-popup">
+      <span id="closeAddQuestionBtn" class="close">&times;</span>
+
+      <h2>Add a Question</h2>
+
+      <form id="questionForm">
+        <label>
+          Question Title:
+          <input 
+            type="text" 
+            id="questionTitle" 
+            placeholder="Example: #112 Path Sum" 
+            required
+          />
+        </label>
+
+        <label>
+          Pattern:
+          <select id="questionPattern" required>
+            <option value="">Choose a pattern</option>
+          </select>
+        </label>
+
+        <label>
+          Core Idea:
+          <textarea id="coreIdea" required></textarea>
+        </label>
+
+        <label>
+          Base Case:
+          <textarea id="baseCase"></textarea>
+        </label>
+
+        <label>
+          Return Logic:
+          <textarea id="returnLogic"></textarea>
+        </label>
+
+        <label>
+          Time Complexity:
+          <input 
+            type="text" 
+            id="timeComplexity" 
+            placeholder="Example: O(n)"
+          />
+        </label>
+
+        <label>
+          Space Complexity:
+          <input 
+            type="text" 
+            id="spaceComplexity" 
+            placeholder="Example: O(h)"
+          />
+        </label>
+
+        <label>
+          Additional Comments:
+          <textarea id="additionalComments"></textarea>
+        </label>
+
+        <button type="submit">Save Question</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Question Popup -->
+  <div id="viewQuestionPopup" class="popup">
+    <div class="popup-content large-popup">
+      <span id="closeViewQuestionBtn" class="close">&times;</span>
+
+      <h2 id="popupQuestionTitle"></h2>
+
+      <p><strong>Pattern:</strong> <span id="popupPattern"></span></p>
+      <p><strong>Core Idea:</strong> <span id="popupCoreIdea"></span></p>
+      <p><strong>Base Case:</strong> <span id="popupBaseCase"></span></p>
+      <p><strong>Return Logic:</strong> <span id="popupReturnLogic"></span></p>
+      <p><strong>Time:</strong> <span id="popupTime"></span></p>
+      <p><strong>Space:</strong> <span id="popupSpace"></span></p>
+      <p><strong>Additional Comments:</strong> <span id="popupComments"></span></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+</html>
