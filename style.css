@@ -1,10 +1,14 @@
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Arial", system-ui;
+  
   padding: 40px;
+  color:#c8176a
 }
 
 h1 {
   font-size: 48px;
+  color:#6f1252;
 }
 
 button {
@@ -12,6 +16,7 @@ button {
   margin: 8px 0;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 60px;
 }
 
 .pattern-list {
@@ -23,7 +28,7 @@ button {
 .pattern-btn {
   background-color: #eeeeee;
   border: 1px solid #999;
-  border-radius: 6px;
+  border-radius: 60px;
 }
 
 .questions-container {
@@ -97,3 +102,4 @@ textarea {
   min-height: 70px;
   resize: vertical;
 }
+
